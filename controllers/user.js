@@ -4,6 +4,7 @@ const Transaction = require("../Models/transactionModel");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("../utils/appError");
 const { getSession } = require("../lib/token");
+const httpStatus = require("http-status");
 
 class UserController {
   getDashboardData = catchAsync(async (req, res, next) => {
@@ -15,7 +16,7 @@ class UserController {
     const { totalWalletBalance, walletBalance, referrals } = user;
     const referralLink = user.generateReferralLink();
 
-    res.status(200).json({
+    res.status(httpStatus.OK).json({
       message: "Dashboard data fetched successfully",
       data: {
         totalWalletBalance,
@@ -32,7 +33,7 @@ class UserController {
 
     if (!user) return next(new AppError('No user found', 404));
 
-    res.status(200).json({
+    res.status(httpStatus.OK).json({
       message: "Success",
       data: { user },
     });
@@ -60,7 +61,7 @@ class UserController {
       date: new Date(),
     });
 
-    res.status(201).json({
+    res.status(httpStatus.CREATED).json({
       message: "Airtime purchased successfully",
       data: { airtime, transaction },
     });
@@ -80,7 +81,7 @@ class UserController {
       .skip((page - 1) * limit)
       .limit(limit);
 
-    res.status(200).json({
+    res.status(httpStatus.OK).json({
       message: "Transaction history fetched successfully",
       data: { transactions, currentPage: page },
     });

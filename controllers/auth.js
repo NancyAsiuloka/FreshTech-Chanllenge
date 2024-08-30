@@ -3,6 +3,7 @@ const User = require('../Models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const { getSession } = require('../lib/token');
+const httpStatus = require("http-status")
 
 class AuthController {
   signup = catchAsync(async (req, res, next) => {
@@ -51,8 +52,12 @@ class AuthController {
     user.passwordConfirm = req.body.passwordConfirm;
     await user.save();
 
-    const authService = new AuthService(user, res);
-    authService.sendResponse(200);
+    res.status(httpStatus.OK).json({
+        message: "Updated Successfully",
+        data: { user },
+      });
+    // const authService = new AuthService(user, res);
+    // authService.sendResponse(200);
   });
 }
 
