@@ -56,8 +56,6 @@ class AuthController {
         message: "Updated Successfully",
         data: { user },
       });
-    // const authService = new AuthService(user, res);
-    // authService.sendResponse(200);
   });
 }
 
